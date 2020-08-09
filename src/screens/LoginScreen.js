@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -13,6 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import {Login} from '../server/users/server';
 import Loading from '../components/Loading';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -24,11 +25,18 @@ export default function LoginScreen() {
     flagLoading ? setFlagLoading(0) : setFlagLoading(1);
   };
 
+  setData = async (data) => {
+    try {
+      await AsyncStorage.setItem('data', JSON.stringify(data));
+    } catch (error) {
+      // Error saving data
+    }
+  };
   loginDb = async (email, password) => {
     if (email != '' && password != '') {
       toggleLoading();
       const data = await Login(email, password);
-      console.log(data);
+      setData(data.user);
       if (data.code === 200) {
         navigation.replace('Dashboard');
       } else if (data.code === 201) {
@@ -41,6 +49,7 @@ export default function LoginScreen() {
     } else
       ToastAndroid.show('Vui lòng nhập đầy đủ thông tin', ToastAndroid.SHORT);
   };
+
   return (
     <View style={styles.container}>
       <Loading flag={flagLoading} />
@@ -50,7 +59,7 @@ export default function LoginScreen() {
         <View>
           <Animatable.View animation={'pulse'} style={styles.view}>
             <View style={styles.inputContainer}>
-              <Text style={styles.txt}>Login</Text>
+              <Text style={styles.txt}>Đăng Nhập</Text>
               <View style={styles.textContainer}>
                 <Icon
                   name={'ios-mail'}
@@ -79,7 +88,7 @@ export default function LoginScreen() {
                 />
                 <TextInput
                   style={styles.textInput}
-                  placeholder={'Password'}
+                  placeholder={'Mật khẩu'}
                   placeholderTextColor={'#b4afaf'}
                   underlineColorAndroid="transparent"
                   secureTextEntry={true}
@@ -92,7 +101,7 @@ export default function LoginScreen() {
                 <TouchableOpacity
                   style={styles.btn}
                   onPress={() => loginDb(email, password)}>
-                  <Text style={styles.textBtn}>Login</Text>
+                  <Text style={styles.textBtn}>Đăng nhập</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -100,7 +109,7 @@ export default function LoginScreen() {
                   onPress={() => {
                     navigation.navigate('RegisterScreen');
                   }}>
-                  <Text style={styles.textBtn}>Register</Text>
+                  <Text style={styles.textBtn}>Đăng kí</Text>
                 </TouchableOpacity>
               </View>
             </View>

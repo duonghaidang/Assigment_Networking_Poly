@@ -55,7 +55,7 @@ export default function RegisterScreen() {
         <View style={styles.inputContainer}>
           <View>
             <Animatable.View animation={'pulse'} style={styles.view}>
-              <Text style={styles.txt}>Register</Text>
+              <Text style={styles.txt}>Đăng Kí</Text>
               <View style={styles.textContainer}>
                 <Icon
                   name={'ios-mail'}
@@ -84,7 +84,7 @@ export default function RegisterScreen() {
                 />
                 <TextInput
                   style={styles.textInput}
-                  placeholder={'Username'}
+                  placeholder={'Tài khoản'}
                   placeholderTextColor={'#b4afaf'}
                   underlineColorAndroid="transparent"
                   returnKeyType="next"
@@ -101,7 +101,7 @@ export default function RegisterScreen() {
                 />
                 <TextInput
                   style={styles.textInput}
-                  placeholder={'Password'}
+                  placeholder={'Mật khẩu'}
                   placeholderTextColor={'#b4afaf'}
                   underlineColorAndroid="transparent"
                   secureTextEntry={true}
@@ -119,7 +119,7 @@ export default function RegisterScreen() {
                 />
                 <TextInput
                   style={styles.textInput}
-                  placeholder={'Cofirm Password'}
+                  placeholder={'Nhập lại mật khẩu'}
                   placeholderTextColor={'#b4afaf'}
                   underlineColorAndroid="transparent"
                   secureTextEntry={true}
@@ -132,13 +132,13 @@ export default function RegisterScreen() {
                 <TouchableOpacity
                   style={styles.btn}
                   onPress={() => registerDB(email, username, password, cofirm)}>
-                  <Text style={styles.textBtn}>Register</Text>
+                  <Text style={styles.textBtn}>Đăng kí</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.btn}
                   onPress={() => navigation.goBack()}>
-                  <Text style={styles.textBtn}>Go to Login </Text>
+                  <Text style={styles.textBtn}>Đăng nhập </Text>
                 </TouchableOpacity>
               </View>
             </Animatable.View>
