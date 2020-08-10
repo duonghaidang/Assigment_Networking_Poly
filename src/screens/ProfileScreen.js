@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Image, Button} from 'react-native';
+import {StyleSheet, Text, View, Image, Button, StatusBar} from 'react-native';
 import Header from '../components/Header';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -32,6 +32,7 @@ export default function ProfileScreen() {
   }, []);
   return (
     <View>
+      <StatusBar backgroundColor="#59B588" />
       <Header title="Thông tin" />
       <View style={{alignItems: 'center'}}>
         <View

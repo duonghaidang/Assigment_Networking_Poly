@@ -18,7 +18,6 @@ export default function ModalChangePass(props) {
     if (email != '' && password != '' && newpassword != '') {
       if (newpassword == cofirm) {
         const data = await ChangePassword(email, password, newpassword);
-        console.log(data);
         if (data.code === 200) {
           ToastAndroid.show('Đổi mật khẩu thành công', ToastAndroid.SHORT);
           setModalVisible(false);

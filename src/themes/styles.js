@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ff8000',
   },
   textInput: {
     color: '#fff',
@@ -13,7 +12,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 20,
     fontSize: 16,
     paddingLeft: 50,
-    backgroundColor: 'rgba(255, 228, 225, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     marginTop: 15,
     marginBottom: 15,
   },
@@ -27,7 +26,7 @@ export default StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     marginRight: 5,
-    backgroundColor: 'rgba(255, 228, 225, 1)',
+    backgroundColor: '#fff',
   },
   btnContainer: {
     marginTop: 30,
@@ -55,7 +54,7 @@ export default StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     fontFamily: '',
-    color: 'rgba(255, 228, 225, 1)',
+    color: '#fff',
   },
   view: {
     height: '100%',
@@ -73,5 +72,8 @@ export default StyleSheet.create({
     top: 26,
     left: 20,
     zIndex: 2,
+  },
+  blur: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });

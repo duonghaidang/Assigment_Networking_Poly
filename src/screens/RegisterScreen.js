@@ -6,6 +6,7 @@ import {
   ImageBackground,
   ToastAndroid,
   TextInput,
+  StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../themes/styles';
@@ -19,17 +20,16 @@ export default function RegisterScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [cofirm, setCofirm] = useState('');
-  const [flagLoading, setFlagLoading] = useState(0);
+  const [flagLoading, setFlagLoading] = useState(false);
   const navigation = useNavigation();
   toggleLoading = () => {
-    flagLoading ? setFlagLoading(0) : setFlagLoading(1);
+    setFlagLoading(!flagLoading);
   };
   registerDB = async (email, username, password, cofirm) => {
     if (email != '' && password != '') {
       if (password == cofirm) {
         toggleLoading();
         const data = await Register(email, username, password);
-        console.log(data);
         if (data.code === 200) {
           ToastAndroid.show('Đăng kí thành công', ToastAndroid.SHORT);
           navigation.goBack();
@@ -48,12 +48,13 @@ export default function RegisterScreen() {
   };
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#000" />
       <Loading flag={flagLoading} />
       <ImageBackground
         source={require('../images/background.jpg')}
         style={styles.imgBackground}>
         <View style={styles.inputContainer}>
-          <View>
+          <View style={styles.blur}>
             <Animatable.View animation={'pulse'} style={styles.view}>
               <Text style={styles.txt}>Đăng Kí</Text>
               <View style={styles.textContainer}>

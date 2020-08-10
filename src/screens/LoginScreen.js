@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TextInput,
   ToastAndroid,
+  StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../themes/styles';
@@ -18,11 +19,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [flagLoading, setFlagLoading] = useState(0);
+  const [flagLoading, setFlagLoading] = useState(false);
   const navigation = useNavigation();
 
   toggleLoading = () => {
-    flagLoading ? setFlagLoading(0) : setFlagLoading(1);
+    setFlagLoading(!flagLoading);
   };
 
   setData = async (data) => {
@@ -52,11 +53,12 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#000" />
       <Loading flag={flagLoading} />
       <ImageBackground
         source={require('../images/background.jpg')}
         style={styles.imgBackground}>
-        <View>
+        <View style={styles.blur}>
           <Animatable.View animation={'pulse'} style={styles.view}>
             <View style={styles.inputContainer}>
               <Text style={styles.txt}>Đăng Nhập</Text>

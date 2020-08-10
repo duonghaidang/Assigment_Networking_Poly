@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground} from 'react-native';
+import {View, ImageBackground, StatusBar, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as Animatable from 'react-native-animatable';
 
 export default function SplashScreen() {
   const [isChecked, setIsChecked] = useState();
@@ -20,9 +21,9 @@ export default function SplashScreen() {
 
   setTimeout(() => {
     if (isChecked) {
-      navigation.navigate('Dashboard');
+      navigation.replace('Dashboard');
     } else {
-      navigation.navigate('LoginScreen');
+      navigation.replace('LoginScreen');
     }
   }, 3000);
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function SplashScreen() {
   }, []);
   return (
     <View style={{flex: 1}}>
+      <StatusBar backgroundColor="#000" />
       <ImageBackground
         source={require('../images/background.jpg')}
         style={{
@@ -39,7 +41,14 @@ export default function SplashScreen() {
           resizeMode: 'cover',
           alignItems: 'center',
           justifyContent: 'center',
-        }}></ImageBackground>
+        }}>
+        <Animatable.View animation={'fadeInUp'}>
+          <Image
+            source={require('../images/logo.png')}
+            style={{height: 300, width: 300}}
+          />
+        </Animatable.View>
+      </ImageBackground>
     </View>
   );
 }
