@@ -10,8 +10,12 @@ import {
 import Header from '../components/Header';
 import ModalAdd from '../components/ModalAdd';
 import Item from '../components/ItemFlatList';
-import {GetAllProducts, SearchProduct} from '../server/products/server';
-import {ScrollView} from 'react-native-gesture-handler';
+import {
+  GetAllProducts,
+  SearchProduct,
+  DeleteProduct,
+  UpdateProduct,
+} from '../server/products/server';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function HomeScreen() {
@@ -19,15 +23,22 @@ export default function HomeScreen() {
   const [isloading, setIsLoading] = useState(true);
   const [name, setName] = useState('');
   const renderItem = ({item}) => (
-    <Item
-      name={item.name}
-      price={item.price}
-      description={item.description}
-      id={item.id}
-    />
+    <Item item={item} onPressDelete={() => deleteProduct(item.id)} />
   );
+  const deleteProduct = async (id) => {
+    const data = await DeleteProduct(id);
+    if (data.code === 200) {
+      ToastAndroid.show('Xoá thành công', ToastAndroid.SHORT);
+      const newList = listData.filter((item) => item.id !== id);
+      return setListData(newList);
+    } else if (data.code === 201) {
+      ToastAndroid.show('Không có sản phẩm', ToastAndroid.SHORT);
+    } else if (data.code === 202) {
+      ToastAndroid.show('Không có id', ToastAndroid.SHORT);
+    } else ToastAndroid.show('Lỗi', ToastAndroid.SHORT);
+  };
 
-  searchData = async () => {
+  const searchData = async () => {
     if (name != '') {
       const data = await SearchProduct(name);
       if (data.code === 200) {
@@ -38,17 +49,21 @@ export default function HomeScreen() {
     } else getData();
   };
 
-  getData = async () => {
+  const getData = async () => {
     const data = await GetAllProducts();
     if (data.code === 200) {
-      return setListData(data.sanpham), setIsLoading(false);
+      setIsLoading(false);
+      await setListData(data.sanpham);
+      return;
     } else if (data.code === 201) {
+      setIsLoading(false);
       ToastAndroid.show('Không có sản phẩm', ToastAndroid.SHORT);
     } else ToastAndroid.show('Lỗi', ToastAndroid.SHORT);
   };
   useEffect(() => {
     searchData(name);
   }, [name]);
+
   return (
     <View style={{flex: 1}}>
       <StatusBar backgroundColor="#59B588" />
@@ -67,6 +82,7 @@ export default function HomeScreen() {
 
           <TextInput
             style={{
+              width: '100%',
               fontSize: 16,
             }}
             placeholder="Tìm kiếm"
@@ -76,17 +92,15 @@ export default function HomeScreen() {
           />
         </View>
       </View>
-      {
-        <FlatList
-          style={{marginTop: 10}}
-          data={listData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          onRefresh={() => getData()}
-          refreshing={isloading}
-        />
-      }
-      <ScrollView></ScrollView>
+      <FlatList
+        style={{marginTop: 10}}
+        data={listData}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        onRefresh={() => getData()}
+        refreshing={isloading}
+        showsHorizontalScrollIndicator={false}
+      />
       <ModalAdd />
     </View>
   );

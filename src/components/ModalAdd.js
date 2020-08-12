@@ -7,6 +7,7 @@ import {
   Button,
   ToastAndroid,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {CreateProduct} from '../server/products/server';
 import Modal from 'react-native-modal';
@@ -21,22 +22,26 @@ export default function ModalAdd() {
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
-  const setText = () => {
-    setName('');
-    setPrice('');
-    setDescription('');
-  };
-  createProduct = async (name, price, description) => {
+  const createProduct = async (name, price, description) => {
     const data = await CreateProduct(name, price, description);
     if (name != '' && price != '' && description != '') {
       if (data.code === 200) {
         ToastAndroid.show('Thêm thành công', ToastAndroid.SHORT);
+        setName('');
+        setPrice('');
+        setDescription('');
         setModalVisible(false);
       } else if (data.code === 201) {
         ToastAndroid.show('Thêm không thành công', ToastAndroid.SHORT);
+        setName('');
+        setPrice('');
+        setDescription('');
         setModalVisible(false);
       } else {
         ToastAndroid.show('Lỗi', ToastAndroid.SHORT);
+        setName('');
+        setPrice('');
+        setDescription('');
         setModalVisible(false);
       }
     } else
@@ -56,17 +61,17 @@ export default function ModalAdd() {
           alignItems: 'center',
         }}>
         <Icon
+          style={{backgroundColor: 'white', borderRadius: 25}}
           name="pluscircle"
           size={50}
           color="#59B588"
-          onPress={toggleModal}
         />
       </TouchableOpacity>
       <Modal
         isVisible={modalVisible}
         animationType="slide"
         onBackdropPress={toggleModal}>
-        <View
+        <KeyboardAvoidingView
           style={{
             // zIndex: 15,
             backgroundColor: '#fff',
@@ -130,7 +135,7 @@ export default function ModalAdd() {
               }}
             />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );

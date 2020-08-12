@@ -18,7 +18,9 @@ export default function Header(props) {
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Icon name={'menuunfold'} size={24} color={'#fff'} />
       </TouchableOpacity>
-      <Text style={{color: '#fff', fontSize: 20}}>{props.title}</Text>
+      <Text style={{color: '#fff', fontSize: 20, fontWeight: 'bold'}}>
+        {props.title}
+      </Text>
       <View style={{width: 24, height: 24}} />
     </View>
   );

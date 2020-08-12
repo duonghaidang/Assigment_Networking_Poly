@@ -7,22 +7,23 @@ import {
   Button,
   ToastAndroid,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {UpdateProduct} from '../server/products/server';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function ModalAdd(props) {
-  const id = props.id;
-  const [name, setName] = useState(props.name);
-  const [price, setPrice] = useState(props.price);
-  const [description, setDescription] = useState(props.description);
+export default function ModalAdd({item}) {
+  const id = item.id;
+  const [name, setName] = useState(item.name);
+  const [price, setPrice] = useState(item.price);
+  const [description, setDescription] = useState(item.description);
   const [modalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
-  updateProduct = async (id, name, price, description) => {
+  const updateProduct = async (id, name, price, description) => {
     const data = await UpdateProduct(id, name, price, description);
     if (name != '' && price != '' && description != '') {
       if (data.code === 200) {
@@ -55,7 +56,7 @@ export default function ModalAdd(props) {
         isVisible={modalVisible}
         animationType="slide"
         onBackdropPress={toggleModal}>
-        <View
+        <KeyboardAvoidingView
           style={{
             // zIndex: 10,
             backgroundColor: '#fff',
@@ -114,12 +115,10 @@ export default function ModalAdd(props) {
             }}>
             <Button
               title="Cập nhật"
-              onPress={() => {
-                updateProduct(id, name, price, description);
-              }}
+              onPress={() => updateProduct(id, name, price, description)}
             />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );

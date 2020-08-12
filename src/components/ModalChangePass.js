@@ -83,7 +83,6 @@ export default function ModalChangePass(props) {
               placeholder="Nhập mật khẩu mới"
               onChangeText={(newpassword) => setNewPassword(newpassword)}
               value={newpassword}
-              keyboardType="numeric"
               returnKeyType="next"
             />
           </View>
@@ -97,7 +96,6 @@ export default function ModalChangePass(props) {
               placeholder="Nhập mật khẩu mới"
               onChangeText={(cofirm) => setCofirm(cofirm)}
               value={cofirm}
-              keyboardType="numeric"
               returnKeyType="next"
             />
           </View>

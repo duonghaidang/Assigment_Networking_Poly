@@ -3,20 +3,8 @@ import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ModalEdit from './ModalEdit';
-import {DeleteProduct} from '../server/products/server';
 
-export default function ItemFlatList(props) {
-  deleteProduct = async (id) => {
-    const data = await DeleteProduct(id);
-    if (data.code === 200) {
-      ToastAndroid.show('Xoá thành công', ToastAndroid.SHORT);
-    } else if (data.code === 201) {
-      ToastAndroid.show('Không có sản phẩm', ToastAndroid.SHORT);
-    } else if (data.code === 202) {
-      ToastAndroid.show('Không có id', ToastAndroid.SHORT);
-    } else ToastAndroid.show('Lỗi', ToastAndroid.SHORT);
-  };
-
+export default function ItemFlatList({item, onPressDelete}) {
   return (
     <View
       style={{
@@ -29,9 +17,9 @@ export default function ItemFlatList(props) {
         justifyContent: 'space-between',
       }}>
       <View>
-        <Text>Tên sản phẩm: {props.name}</Text>
-        <Text>Giá: {props.price}</Text>
-        <Text>Mô tả: {props.description}</Text>
+        <Text>Tên sản phẩm: {item.name}</Text>
+        <Text>Giá: {item.price}đ</Text>
+        <Text>Mô tả: {item.description}</Text>
       </View>
       <View style={{justifyContent: 'center'}}>
         <View
@@ -40,14 +28,10 @@ export default function ItemFlatList(props) {
             alignItems: 'center',
             justifyContent: 'space-evenly',
           }}>
-          <ModalEdit
-            id={props.id}
-            name={props.name}
-            price={props.price}
-            description={props.description}
-          />
+          <ModalEdit item={item} />
           <TouchableOpacity
-            onPress={() => deleteProduct(props.id)}
+            // onPress={() => deleteProduct(props.id)}
+            onPress={onPressDelete}
             style={{
               borderWidth: 1,
               borderRadius: 10,

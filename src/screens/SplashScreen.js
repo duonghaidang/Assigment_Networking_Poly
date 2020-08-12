@@ -11,21 +11,25 @@ export default function SplashScreen() {
   check = async () => {
     try {
       const asyncStorageKeys = await AsyncStorage.getAllKeys();
-      if (asyncStorageKeys.length > 0) {
-        return setIsChecked(true);
-      } else return setIsChecked(false);
+      setTimeout(() => {
+        if (asyncStorageKeys.length > 0) {
+          navigation.replace('Dashboard');
+        } else {
+          navigation.replace('LoginScreen');
+        }
+      }, 3000);
     } catch (error) {
       // Error retrieving data
     }
   };
 
-  setTimeout(() => {
-    if (isChecked) {
-      navigation.replace('Dashboard');
-    } else {
-      navigation.replace('LoginScreen');
-    }
-  }, 3000);
+  // setTimeout(() => {
+  //   if (isChecked) {
+  //     navigation.replace('Dashboard');
+  //   } else {
+  //     navigation.replace('LoginScreen');
+  //   }
+  // }, 3000);
   useEffect(() => {
     check();
   }, []);
